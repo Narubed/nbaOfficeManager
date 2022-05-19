@@ -1,7 +1,4 @@
 const router = require("express").Router();
-// const { User, validate } = require("../models/user");
-// const bcrypt = require("bcrypt");
-
 const employee = require("../controllers/employee.controller")
 
 router.post("/", employee.create)

@@ -33,21 +33,21 @@ const Employee = mongoose.model("employee", employeeSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
-    emp_name: Joi.string().required().label("First Name"),
-    emp_tel: Joi.string().required().label("Last Name"),
-    emp_address: Joi.string().required().label("Last Name"),
-    emp_iden: Joi.string().required().label("Last Name"),
-    emp_username: Joi.string().required().label("Last Name"),
+    emp_name: Joi.string().required().label("emp_name"),
+    emp_tel: Joi.string().required().label("emp_tel"),
+    emp_address: Joi.string().required().label("emp_address"),
+    emp_iden: Joi.string().required().label("emp_iden"),
+    emp_username: Joi.string().required().label("emp_username"),
     emp_password: passwordComplexity().required().label("emp_password"),
-    emp_deparment: Joi.string().required().label("Last Name"),
-    emp_position: Joi.string().required().label("Last Name"),
+    emp_deparment: Joi.string().required().label("emp_deparment"),
+    emp_position: Joi.string().required().label("emp_position"),
     emp_salary: Joi.number().precision(2).required().label("emp_salary"),
     emp_start: Joi.date().raw().required(),
     emp_end: Joi.date().raw().required(),
-    emp_bank: Joi.string().required().label("Last Name"),
-    emp_bank_number: Joi.string().required().label("Last Name"),
+    emp_bank: Joi.string().required().label("emp_bank"),
+    emp_bank_number: Joi.string().required().label("emp_bank_number"),
     // emp_pic: Joi.string().required().label("emp_pic"),
-    emp_status: Joi.string().required().label("Last Name"),
+    emp_status: Joi.string().required().label("emp_status"),
     emp_timestamp: Joi.date().raw().required(),
   });
   return schema.validate(data);
