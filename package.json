@@ -1,20 +1,31 @@
 {
-  "name": "nbaofficemanager-backend",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Narubed/nbaOfficeManager-Backend.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Narubed/nbaOfficeManager-Backend/issues"
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "googleapis": "^100.0.0",
+    "joi": "^17.5.0",
+    "joi-password-complexity": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.2",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.15"
   },
-  "homepage": "https://github.com/Narubed/nbaOfficeManager-Backend#readme"
+  "engines": {
+    "node": "^16.14.2",
+    "yarn": "^1.22.18",
+    "npm": "^8.5.0"
+  }
 }
