@@ -10,7 +10,7 @@ const employeeSchema = new mongoose.Schema({
   emp_address: { type: String, required: true },
   emp_username: { type: String, required: true },
   emp_password: { type: String, required: true },
-  emp_deparment: { type: String, required: true },
+  emp_department: { type: String, required: true },
   emp_position: { type: String, required: true },
   emp_salary: { type: Number, required: true },
   emp_start: { type: Date, required: true },
