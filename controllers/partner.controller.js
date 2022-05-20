@@ -15,27 +15,19 @@ exports.create = async (req, res) => {
       partner_username: req.body.partner_username,
     });
     if (user)
-      return res
-        .status(409)
-        .send({
-          message: "partner_username with given username already Exist!",
-        });
+      return res.status(409).send({
+        message: "มีชื่อผู้ใช้งานนี้ในระบบเเล้ว",
+      });
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.partner_password, salt);
-    const data = {
-      ...req.body,
-      partner_password: hashPassword,
-    };
     await new Partner({
       ...req.body,
       partner_password: hashPassword,
     }).save();
-    res
-      .status(201)
-      .send({ message: "Partner created successfully", status: true });
+    res.status(201).send({ message: "สร้างผู้ใช้งานสำเร็จ", status: true });
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error", status: false });
+    res.status(500).send({ message: "มีบางอย่างผิดพลาด", status: false });
   }
 };
 exports.findAll = async (req, res) => {
@@ -46,12 +38,11 @@ exports.findAll = async (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials.",
+          message: err.message || "มีบางอย่างผิดพลาด",
         });
       });
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error", status: false });
+    res.status(500).send({ message: "มีบางอย่างผิดพลาด", status: false });
   }
 };
 exports.findOne = (req, res) => {
@@ -61,12 +52,12 @@ exports.findOne = (req, res) => {
       if (!data)
         res
           .status(404)
-          .send({ message: "Not found Partner with id " + id, status: false });
+          .send({ message: "ไม่สามารถหาผู้ใช้งานนี้ได้", status: false });
       else res.send({ data, status: true });
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Partner with id=" + id,
+        message: "มีบางอย่างผิดพลาด",
         status: false,
       });
     });
@@ -75,7 +66,7 @@ exports.update = async (req, res) => {
   try {
     if (!req.body) {
       return res.status(400).send({
-        message: "Data to update can not be empty!",
+        message: "ส่งข้อมูลผิดพลาด",
       });
     }
     const id = req.params.id;
@@ -84,18 +75,18 @@ exports.update = async (req, res) => {
         .then((data) => {
           if (!data) {
             res.status(404).send({
-              message: `Cannot update Partner with id=${id}. Maybe Partner was not found!`,
+              message: `ไม่สามารถเเก้ไขผู้ใช้งานนี้ได้`,
               status: false,
             });
           } else
             res.send({
-              message: "Partner was updated successfully.",
+              message: "แก้ไขผู้ใช้งานนี้เรียบร้อยเเล้ว",
               status: true,
             });
         })
         .catch((err) => {
           res.status(500).send({
-            message: "Error updating Partner with id=" + id,
+            message: "มีบ่างอย่างผิดพลาด" + id,
             status: false,
           });
         });
@@ -110,48 +101,47 @@ exports.update = async (req, res) => {
         .then((data) => {
           if (!data) {
             res.status(404).send({
-              message: `Cannot update Partner with id=${id}. Maybe Partner was not found!`,
+              message: `ไม่สามารถเเก้ไขผู้ใช้งานนี้ได้`,
               status: false,
             });
           } else
             res.send({
-              message: "Partner was updated successfully.",
+              message: "แก้ไขผู้ใช้งานนี้เรียบร้อยเเล้ว",
               status: true,
             });
         })
         .catch((err) => {
           res.status(500).send({
-            message: "Error updating Partner with id=" + id,
+            message: "ไม่สามารถเเก้ไขผู้ใช้งานนี้ได้",
             status: false,
           });
         });
     }
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error", status: false });
+    res.status(500).send({ message: "มีบางอย่างผิดพลาด", status: false });
   }
 };
 
 exports.delete = (req, res) => {
   const id = req.params.id;
-  console.log(id);
   Partner.findByIdAndRemove(id, { useFindAndModify: false })
     .then((data) => {
       console.log(data);
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete Partner with id=${id}. Maybe Partner was not found!`,
+          message: `ไม่สามารถลบผู้ใช้งานนี้ได้`,
           status: false,
         });
       } else {
         res.send({
-          message: "Partner was deleted successfully!",
+          message: "ลบผู้ใช้งานนี้เรียบร้อยเเล้ว",
           status: true,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Partner with id=" + id,
+        message: "ไม่สามารถลบผู้ใช้งานนี้ได้",
         status: false,
       });
     });

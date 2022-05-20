@@ -19,7 +19,7 @@ const employeeSchema = new mongoose.Schema({
   emp_bank_number: { type: String, required: true },
   emp_pic: { type: String, required: true },
   emp_status: { type: String, required: true },
-  emp_timestamp: { type: Date, required: true },
+  emp_timestamp: { type: Date, required: true, default: new Date() },
 });
 
 employeeSchema.methods.generateAuthToken = function () {
@@ -33,22 +33,22 @@ const Employee = mongoose.model("employee", employeeSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
-    emp_name: Joi.string().required().label("emp_name"),
-    emp_tel: Joi.string().required().label("emp_tel"),
-    emp_address: Joi.string().required().label("emp_address"),
-    emp_iden: Joi.string().required().label("emp_iden"),
-    emp_username: Joi.string().required().label("emp_username"),
+    emp_name: Joi.string(),
+    emp_tel: Joi.string(),
+    emp_address: Joi.string(),
+    emp_iden: Joi.string(),
+    emp_username: Joi.string(),
     emp_password: passwordComplexity().required().label("emp_password"),
-    emp_department: Joi.string().required().label("emp_deparment"),
-    emp_position: Joi.string().required().label("emp_position"),
+    emp_department: Joi.string(),
+    emp_position: Joi.string(),
     emp_salary: Joi.number().precision(2).required().label("emp_salary"),
     emp_start: Joi.date().raw().required(),
     emp_end: Joi.date().raw().required(),
     emp_bank: Joi.string().required().label("emp_bank"),
-    emp_bank_number: Joi.string().required().label("emp_bank_number"),
+    emp_bank_number: Joi.string(),
     // emp_pic: Joi.string().required().label("emp_pic"),
-    emp_status: Joi.string().required().label("emp_status"),
-    emp_timestamp: Joi.date().raw().required(),
+    emp_status: Joi.string(),
+    // emp_timestamp: Joi.date().raw().required(),
   });
   return schema.validate(data);
 };

@@ -1,5 +1,19 @@
 const router = require("express").Router();
 const partner = require("../controllers/partner.controller");
+const event = require("../controllers/partner/event.controller");
+const salary = require("../controllers/partner/salary.controller");
+
+router.post("/event/", event.create);
+router.get("/event/", event.findAll);
+router.get("/event/:id", event.findOne);
+router.delete("/event/:id", event.delete);
+router.put("/event/:id", event.update);
+
+router.post("/salary/", salary.create);
+router.get("/salary/", salary.findAll);
+router.get("/salary/:id", salary.findOne);
+router.delete("/salary/:id", salary.delete);
+router.put("/salary/:id", salary.update);
 
 router.post("/", partner.create);
 router.get("/", partner.findAll);

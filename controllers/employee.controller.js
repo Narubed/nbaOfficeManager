@@ -36,7 +36,7 @@ exports.create = async (req, res) => {
     let upload = multer({ storage: storage }).single("emp_pic");
     upload(req, res, function (err) {
       if (!req.file) {
-        return res.send("Please select an image to upload");
+        return res.send("กรุณาส่งไฟล์รูปภาพด้วย");
       } else if (err instanceof multer.MulterError) {
         return res.send(err);
       } else if (err) {
@@ -72,8 +72,8 @@ exports.create = async (req, res) => {
         if (user)
           return res
             .status(409)
-            .send({ message: "emp_username with given username already Exist!" });
-            
+            .send({ message: "ชื่อผู้ใช้งานนี้ มีอยู่ในระบบเเล้ว" });
+
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashPassword = await bcrypt.hash(req.body.emp_password, salt);
 
@@ -85,22 +85,20 @@ exports.create = async (req, res) => {
 
         res
           .status(201)
-          .send({ message: "User created successfully", status: true });
+          .send({ message: "เพิ่มข้อมูลผู้ใช้งานสำเร็จ", status: true });
       } catch (error) {
-        res
-          .status(500)
-          .send({ message: "Internal Server Error", status: false });
+        res.status(500).send({ message: "มีบ่างอย่างผิดพลาด", status: false });
       }
     }
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).send({ message: "มีบ่างอย่างผิดพลาด" });
   }
 };
 exports.update = async (req, res) => {
   try {
     if (!req.body) {
       return res.status(400).send({
-        message: "Data to update can not be empty!",
+        message: "ข้อมูลไม่ถูกต้อง",
       });
     }
     let upload = multer({ storage: storage }).single("emp_pic");
@@ -110,21 +108,20 @@ exports.update = async (req, res) => {
         if (!req.body.emp_password) {
           Employee.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
             .then((data) => {
-              console.log("data ==>>>", data);
               if (!data) {
                 res.status(404).send({
-                  message: `Cannot update Employee with id=${id}. Maybe Employee was not found!`,
+                  message: `ไม่สามารถแก้ไขข้อมูลนี้ได้`,
                   status: false,
                 });
               } else
                 res.send({
-                  message: "Employee was updated successfully.",
+                  message: "การเเก้ไขข้อมูลสำเร็จ.",
                   status: true,
                 });
             })
             .catch((err) => {
               res.status(500).send({
-                message: "Error updating Employee with id=" + id,
+                message: "ไม่สามารถเเก้ไขข้อมูลได้",
                 status: false,
               });
             });
@@ -139,18 +136,18 @@ exports.update = async (req, res) => {
             .then((data) => {
               if (!data) {
                 res.status(404).send({
-                  message: `Cannot update Employee with id=${id}. Maybe Employee was not found!`,
+                  message: `ไม่สามารถแก้ไขข้อมูลนี้ได้`,
                   status: false,
                 });
               } else
                 res.send({
-                  message: "Employee  was updated successfully.",
+                  message: "การเเก้ไขข้อมูลสำเร็จ",
                   status: true,
                 });
             })
             .catch((err) => {
               res.status(500).send({
-                message: "Error updating User with id=" + id,
+                message: "ไม่สามารถแก้ไขข้อมูลนี้ได้",
                 status: false,
               });
             });
@@ -191,18 +188,18 @@ exports.update = async (req, res) => {
                 console.log("data ==>>>", data);
                 if (!data) {
                   res.status(404).send({
-                    message: `Cannot update Employee with id=${id}. Maybe Employee was not found!`,
+                    message: `ไม่สามารถแก้ไขข้อมูลนี้ได้`,
                     status: false,
                   });
                 } else
                   res.send({
-                    message: "Employee was updated successfully.",
+                    message: "การเเก้ไขข้อมูลสำเร็จ",
                     status: true,
                   });
               })
               .catch((err) => {
                 res.status(500).send({
-                  message: "Error updating Employee with id=" + id,
+                  message: "ไม่สามารถแก้ไขข้อมูลนี้ได้",
                   status: false,
                 });
               });
@@ -222,30 +219,30 @@ exports.update = async (req, res) => {
               .then((data) => {
                 if (!data) {
                   res.status(404).send({
-                    message: `Cannot update Employee with id=${id}. Maybe Employee was not found!`,
+                    message: `ไม่สามารถแก้ไขข้อมูลนี้ได้`,
                     status: false,
                   });
                 } else
                   res.send({
-                    message: "Employee was updated successfully.",
+                    message: "การเเก้ไขข้อมูลสำเร็จ",
                     status: true,
                   });
               })
               .catch((err) => {
                 res.status(500).send({
-                  message: "Error updating Employee with id=" + id,
+                  message: "ไม่สามารถแก้ไขข้อมูลนี้ได้",
                   status: false,
                 });
               });
           }
           // END
         } catch (error) {
-          res.status(500).send({ message: "Internal Server Error" });
+          res.status(500).send({ message: "มีบ่างอย่างผิดพลาด" });
         }
       }
     });
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).send({ message: "มีบ่างอย่างผิดพลาด" });
   }
 };
 
@@ -257,12 +254,11 @@ exports.findAll = async (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials.",
+          message: err.message || "มีบ่างอย่างผิดพลาด.",
         });
       });
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).send({ message: "มีบ่างอย่างผิดพลาด" });
   }
 };
 
@@ -273,12 +269,12 @@ exports.findOne = (req, res) => {
       if (!data)
         res
           .status(404)
-          .send({ message: "Not found Employee with id " + id, status: false });
+          .send({ message: "ไม่สามารถหาข้อมูลได้", status: false });
       else res.send({ data, status: true });
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Employee with id=" + id,
+        message: "มีบ่างอย่างผิดพลาด",
         status: false,
       });
     });
@@ -291,19 +287,19 @@ exports.delete = (req, res) => {
     .then((data) => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete Employee with id=${id}. Maybe Employee was not found!`,
+          message: `ไม่สามารถลบผู้ใช้งานนี้ได้`,
           status: true,
         });
       } else {
         res.send({
-          message: "Employee was deleted successfully!",
+          message: "ลบผู้ใช้งานสำเร็จ",
           status: false,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Employee with id=" + id,
+        message: "ไม่สามารถลบผู้ใช้งานนี้ได้",
         status: false,
       });
     });

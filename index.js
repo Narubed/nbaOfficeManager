@@ -13,6 +13,10 @@ const login_Employee = require("./routes/login_employee");
 const delete_image = require("./routes/deleteImage");
 const partnerRoutes = require("./routes/partner");
 const login_partner = require("./routes/login_partner");
+const advance_money = require("./routes/advance_money");
+
+// manager
+const leavework = require("./routes/leavework");
 
 // database connection
 connection();
@@ -27,6 +31,10 @@ app.use("/v1/office/employee", employeeRoutes);
 app.use("/v1/office/login_employee", login_Employee);
 app.use("/v1/office/partner", partnerRoutes);
 app.use("/v1/office/login_partner", login_partner);
+
+// manager
+app.use("/v1/office/leavework", leavework);
+app.use("/v1/office/advance_money", advance_money);
 
 const port = process.env.PORT || 8004;
 app.listen(port, console.log(`Listening on port ${port}...`));
