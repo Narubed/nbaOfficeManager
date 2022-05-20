@@ -39,7 +39,7 @@ const validate = (data) => {
     emp_iden: Joi.string().required().label("emp_iden"),
     emp_username: Joi.string().required().label("emp_username"),
     emp_password: passwordComplexity().required().label("emp_password"),
-    emp_deparment: Joi.string().required().label("emp_deparment"),
+    emp_department: Joi.string().required().label("emp_deparment"),
     emp_position: Joi.string().required().label("emp_position"),
     emp_salary: Joi.number().precision(2).required().label("emp_salary"),
     emp_start: Joi.date().raw().required(),

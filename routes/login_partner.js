@@ -1,52 +1,52 @@
 const router = require("express").Router();
-const { Employee } = require("../models/employee.model");
+const { Partner } = require("../models/partner.model");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 require("dotenv").config();
-// emp_username
+// partner_username
 // emp_password
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const { error } = validate(req.body);
     if (error)
       return res.status(400).send({ message: error.details[0].message });
 
-    const employee = await Employee.findOne({
-      emp_username: req.body.emp_username,
+    const partner = await Partner.findOne({
+      partner_username: req.body.partner_username,
     });
-    if (!employee)
+    console.log(partner);
+
+    if (!partner)
       return res.status(401).send({
-        message: "Invalid emp_username or emp_password",
+        message: "Invalid partner_username or partner_password",
         status: false,
       });
 
     const validPassword = await bcrypt.compare(
-      req.body.emp_password,
-      employee.emp_password
+      req.body.partner_password,
+      partner.partner_password
     );
     if (!validPassword)
       return res.status(401).send({
-        message: "Invalid emp_username or emp_password",
+        message: "Invalid partner_username or partner_password",
         status: false,
       });
 
-    const token = employee.generateAuthToken();
+    const token = partner.generateAuthToken();
     const data = {
-      _id: employee._id,
-      emp_name: employee.emp_name,
-      emp_deparment: employee.emp_deparment,
-      emp_position: employee.emp_position,
-      emp_pic: employee.emp_pic,
-      emp_status: employee.emp_status,
+      _id: partner._id,
+      partner_name: partner.partner_name,
+      partner_level: partner.partner_level,
+      partner_sublevel: partner.partner_sublevel,
+      partner_status: partner.partner_status,
     };
-    console.log(data, "data");
     res.status(200).send({
       token: token,
       message: "logged in successfully",
       status: true,
-      data: data,
+      data,
     });
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
@@ -55,8 +55,8 @@ router.post("/", async (req, res) => {
 
 const validate = (data) => {
   const schema = Joi.object({
-    emp_username: Joi.string().required().label("emp_username"),
-    emp_password: Joi.string().required().label("emp_password"),
+    partner_username: Joi.string().required().label("partner_username"),
+    partner_password: Joi.string().required().label("partner_password"),
   });
   return schema.validate(data);
 };

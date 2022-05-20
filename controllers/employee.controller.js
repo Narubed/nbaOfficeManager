@@ -31,6 +31,7 @@ const storage = multer.diskStorage({
 
 exports.create = async (req, res) => {
   console.log(req.body);
+  console.log(req.file);
   try {
     let upload = multer({ storage: storage }).single("emp_pic");
     upload(req, res, function (err) {
