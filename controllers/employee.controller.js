@@ -65,6 +65,15 @@ exports.create = async (req, res) => {
           return res
             .status(400)
             .send({ message: error.details[0].message, status: false });
+
+        const user = await Employee.findOne({
+          emp_username: req.body.emp_username,
+        });
+        if (user)
+          return res
+            .status(409)
+            .send({ message: "emp_username with given username already Exist!" });
+            
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashPassword = await bcrypt.hash(req.body.emp_password, salt);
 

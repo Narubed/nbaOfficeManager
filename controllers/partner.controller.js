@@ -11,6 +11,15 @@ exports.create = async (req, res) => {
       return res
         .status(400)
         .send({ message: error.details[0].message, status: false });
+    const user = await Partner.findOne({
+      partner_username: req.body.partner_username,
+    });
+    if (user)
+      return res
+        .status(409)
+        .send({
+          message: "partner_username with given username already Exist!",
+        });
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.partner_password, salt);
