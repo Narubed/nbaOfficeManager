@@ -151,8 +151,11 @@ exports.update = async (req, res) => {
           { ...req.body, salary_pic: response.data.id },
           { useFindAndModify: false }
         )
-          .then((data) => {
+          .then(async (data) => {
             if (!data) {
+              await drive.files.delete({
+                fileId: response.data.id.toString(),
+              });
               res.status(404).send({
                 message: `ไม่สามารถเเก้ไขรายงานนี้ได้`,
                 status: false,
@@ -163,7 +166,10 @@ exports.update = async (req, res) => {
                 status: true,
               });
           })
-          .catch((err) => {
+          .catch(async (err) => {
+            await drive.files.delete({
+              fileId: response.data.id.toString(),
+            });
             res.status(500).send({
               message: "ไม่สามารถเเก้ไขรายงานนี้ได้",
               status: false,

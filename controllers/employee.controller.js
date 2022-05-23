@@ -69,11 +69,14 @@ exports.create = async (req, res) => {
         const user = await Employee.findOne({
           emp_username: req.body.emp_username,
         });
-        if (user)
+        if (user) {
+          await drive.files.delete({
+            fileId: response.data.id.toString(),
+          });
           return res
             .status(409)
             .send({ message: "ชื่อผู้ใช้งานนี้ มีอยู่ในระบบเเล้ว" });
-
+        }
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashPassword = await bcrypt.hash(req.body.emp_password, salt);
 
@@ -184,9 +187,12 @@ exports.update = async (req, res) => {
               { ...req.body, emp_pic: response.data.id },
               { useFindAndModify: false }
             )
-              .then((data) => {
+              .then(async (data) => {
                 console.log("data ==>>>", data);
                 if (!data) {
+                  await drive.files.delete({
+                    fileId: response.data.id.toString(),
+                  });
                   res.status(404).send({
                     message: `ไม่สามารถแก้ไขข้อมูลนี้ได้`,
                     status: false,
@@ -197,7 +203,10 @@ exports.update = async (req, res) => {
                     status: true,
                   });
               })
-              .catch((err) => {
+              .catch(async (err) => {
+                await drive.files.delete({
+                  fileId: response.data.id.toString(),
+                });
                 res.status(500).send({
                   message: "ไม่สามารถแก้ไขข้อมูลนี้ได้",
                   status: false,
@@ -216,8 +225,11 @@ exports.update = async (req, res) => {
               },
               { useFindAndModify: false }
             )
-              .then((data) => {
+              .then(async (data) => {
                 if (!data) {
+                  await drive.files.delete({
+                    fileId: response.data.id.toString(),
+                  });
                   res.status(404).send({
                     message: `ไม่สามารถแก้ไขข้อมูลนี้ได้`,
                     status: false,
@@ -228,7 +240,10 @@ exports.update = async (req, res) => {
                     status: true,
                   });
               })
-              .catch((err) => {
+              .catch(async (err) => {
+                await drive.files.delete({
+                  fileId: response.data.id.toString(),
+                });
                 res.status(500).send({
                   message: "ไม่สามารถแก้ไขข้อมูลนี้ได้",
                   status: false,

@@ -6,6 +6,7 @@ const passwordComplexity = require("joi-password-complexity");
 const partnerSchema = new mongoose.Schema({
   partner_name: { type: String, required: true },
   partner_tel: { type: String, required: true },
+  partner_iden: { type: String, required: true },
   partner_level: { type: String, required: true },
   partner_sublevel: { type: String, required: true },
   partner_address: { type: String, required: true },
@@ -20,7 +21,7 @@ const partnerSchema = new mongoose.Schema({
   partner_bank: { type: String, required: true },
   partner_bank_number: { type: String, required: true },
   partner_status: { type: String, required: true },
-  partner_timestamp: { type: Date, required: true },
+  partner_timestamp: { type: Date, required: true, default: new Date() },
 });
 
 partnerSchema.methods.generateAuthToken = function () {
@@ -36,6 +37,7 @@ const validate = (data) => {
   const schema = Joi.object({
     partner_name: Joi.string().required().label("partner_name"),
     partner_tel: Joi.string().required().label("partner_tel"),
+    partner_iden: Joi.string().required().label("partner_iden"),
     partner_level: Joi.string().required().label("partner_level"),
     partner_sublevel: Joi.string().required().label("partner_sublevel"),
     partner_address: Joi.string().required().label("partner_address"),
@@ -53,7 +55,7 @@ const validate = (data) => {
     partner_bank: Joi.string().required().label("partner_bank"),
     partner_bank_number: Joi.string().required().label("partner_bank_num"),
     partner_status: Joi.string().required().label("partner_status"),
-    partner_timestamp: Joi.date().raw().required(),
+    // partner_timestamp: Joi.date().raw().required(),
   });
   return schema.validate(data);
 };
