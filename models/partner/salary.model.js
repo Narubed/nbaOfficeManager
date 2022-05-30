@@ -7,8 +7,8 @@ const SalarySchema = new mongoose.Schema({
   salary_amount: { type: Number, required: true },
   salary_pic: { type: String, required: true },
   salary_status: { type: String, required: true },
-  salary_date: { type: Date, required: true, default: new Date() },
-  salary_payroll_date: { type: Date, required: true, default: new Date() },
+  salary_date: { type: Date, required: true, default: Date.now() },
+  salary_payroll_date: { type: Date, required: true, default: Date.now() },
 });
 
 SalarySchema.methods.generateAuthToken = function () {

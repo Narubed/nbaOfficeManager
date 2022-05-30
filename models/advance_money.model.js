@@ -6,7 +6,7 @@ const Advance_MoneySchema = new mongoose.Schema({
   avm_owner: { type: String, required: true }, // _id
   avm_amount: { type: Number, required: true },
   avm_status: { type: String, required: true, default: "waiting" },
-  avm_timestamp: { type: Date, required: true, default: new Date() },
+  avm_timestamp: { type: Date, required: true, default: Date.now() },
 });
 
 Advance_MoneySchema.methods.generateAuthToken = function () {
@@ -23,7 +23,7 @@ const validate = (data) => {
     avm_owner: Joi.string().required().label("avm_owner"),
     avm_amount: Joi.number().precision(2),
     avm_status: Joi.string().default("waiting"),
-    // avm_timestamp: Joi.date().raw().required().default(new Date()),
+    // avm_timestamp: Joi.date().raw().required().default(Date.now()),
   });
   return schema.validate(data);
 };

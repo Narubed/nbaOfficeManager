@@ -21,7 +21,7 @@ const partnerSchema = new mongoose.Schema({
   partner_bank: { type: String, required: true },
   partner_bank_number: { type: String, required: true },
   partner_status: { type: String, required: true },
-  partner_timestamp: { type: Date, required: true, default: new Date() },
+  partner_timestamp: { type: Date, required: true, default: Date.now() },
 });
 
 partnerSchema.methods.generateAuthToken = function () {

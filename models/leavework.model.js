@@ -10,7 +10,7 @@ const leaveworkSchema = new mongoose.Schema({
   lew_number_day: { type: Number, required: true },
   lew_manager_confirm: { type: Boolean, required: true, default: false },
   lew_ceo_confirm: { type: Boolean, required: true, default: false },
-  lew_timestamp: { type: Date, required: true, default: new Date() },
+  lew_timestamp: { type: Date, required: true, default: Date.now() },
 });
 
 leaveworkSchema.methods.generateAuthToken = function () {
@@ -34,7 +34,7 @@ const validate = (data) => {
       .label("lew_number_day"),
     lew_manager_confirm: Joi.boolean().default(false),
     lew_ceo_confirm: Joi.boolean().default(false),
-    // lew_timestamp: Joi.date().raw().required().default(new Date()),
+    // lew_timestamp: Joi.date().raw().required().default( Date.now()),
   });
   return schema.validate(data);
 };

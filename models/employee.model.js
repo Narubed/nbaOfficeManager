@@ -19,7 +19,7 @@ const employeeSchema = new mongoose.Schema({
   emp_bank_number: { type: String, required: true },
   emp_pic: { type: String, required: true },
   emp_status: { type: String, required: true },
-  emp_timestamp: { type: Date, required: true, default: new Date() },
+  emp_timestamp: { type: Date, required: true, default: Date.now() },
 });
 
 employeeSchema.methods.generateAuthToken = function () {
