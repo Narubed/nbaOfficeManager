@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const fs = require("fs");
-const { Event, validate } = require("../../models/partner/event.model");
+const { EventReport, validate } = require("../../models/partner/event_report.model");
 
 exports.create = async (req, res) => {
   try {
@@ -10,7 +10,7 @@ exports.create = async (req, res) => {
       return res
         .status(400)
         .send({ message: error.details[0].message, status: false });
-    const valueEvent = await new Event({ ...req.body }).save();
+    const valueEvent = await new EventReport({ ...req.body }).save();
     res.status(201).send({ message: "สร้างรายงานสำเร็จ", status: true, event_id: valueEvent._id });
   } catch (error) {
     res.status(500).send({ message: "มีบ่างอย่างผิดพลาด", status: false });
@@ -31,7 +31,7 @@ exports.update = async (req, res) => {
         .send({ message: error.details[0].message, status: false });
 
     const id = req.params.id;
-    Event.findByIdAndUpdate(id, { ...req.body }, { useFindAndModify: false })
+    EventReport.findByIdAndUpdate(id, { ...req.body }, { useFindAndModify: false })
       .then((data) => {
         if (!data) {
           res.status(404).send({
@@ -57,7 +57,7 @@ exports.update = async (req, res) => {
 
 exports.findAll = async (req, res) => {
   try {
-    Event.find()
+    EventReport.find()
       .then(async (data) => {
         res.send({ data, message: "success", status: true });
       })
@@ -72,7 +72,7 @@ exports.findAll = async (req, res) => {
 };
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Event.findById(id)
+  EventReport.findById(id)
     .then((data) => {
       if (!data)
         res
@@ -90,7 +90,7 @@ exports.findOne = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Event.findByIdAndRemove(id, { useFindAndModify: false })
+  EventReport.findByIdAndRemove(id, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({

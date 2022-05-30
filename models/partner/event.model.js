@@ -7,7 +7,7 @@ const EventSchema = new mongoose.Schema({
   event_topic: { type: String, required: true },
   event_detail: { type: String, required: true },
   event_status: { type: String, required: true, default: "sent" },
-  event_timestamp: { type: Date, required: true, default: new Date() },
+  event_timestamp: { type: Date, required: true, default: Date.now() },
 });
 
 EventSchema.methods.generateAuthToken = function () {

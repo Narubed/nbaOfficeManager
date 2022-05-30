@@ -2,6 +2,14 @@ const router = require("express").Router();
 const partner = require("../controllers/partner.controller");
 const event = require("../controllers/partner/event.controller");
 const salary = require("../controllers/partner/salary.controller");
+const event_report = require("../controllers/partner/event_report.controller");
+
+
+router.post("/event_report/", event_report.create);
+router.get("/event_report/", event_report.findAll);
+router.get("/event_report/:id", event_report.findOne);
+router.delete("/event_report/:id", event_report.delete);
+router.put("/event_report/:id", event_report.update);
 
 router.post("/event/", event.create);
 router.get("/event/", event.findAll);
