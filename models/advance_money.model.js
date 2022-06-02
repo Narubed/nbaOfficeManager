@@ -23,7 +23,7 @@ const validate = (data) => {
     avm_owner: Joi.string().required().label("avm_owner"),
     avm_amount: Joi.number().precision(2),
     avm_status: Joi.string().default("waiting"),
-    // avm_timestamp: Joi.date().raw().required().default(Date.now()),
+    avm_timestamp: Joi.date().raw().default(Date.now()),
   });
   return schema.validate(data);
 };

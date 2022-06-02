@@ -48,7 +48,7 @@ const validate = (data) => {
     emp_bank_number: Joi.string(),
     // emp_pic: Joi.string().required().label("emp_pic"),
     emp_status: Joi.string(),
-    // emp_timestamp: Joi.date().raw().required(),
+    emp_timestamp: Joi.date().raw().default(Date.now()),
   });
   return schema.validate(data);
 };

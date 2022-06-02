@@ -7,7 +7,7 @@ const EventSchema = new mongoose.Schema({
   event_topic: { type: String, required: true },
   event_detail: { type: String, required: true },
   event_status: { type: String, required: true, default: "sent" },
-  event_timestamp: { type: Date, required: true, default: Date.now() },
+  event_timestamp: { type: Date, required: true, default: Date.now()},
 });
 
 EventSchema.methods.generateAuthToken = function () {
@@ -25,7 +25,7 @@ const validate = (data) => {
     event_topic: Joi.string(),
     event_detail: Joi.string(),
     event_status: Joi.string().default("sent"),
-    // event_timestamp: Joi.date().raw().required().default(new Date()),
+    event_timestamp: Joi.date().raw().default(Date.now()),
   });
   return schema.validate(data);
 };

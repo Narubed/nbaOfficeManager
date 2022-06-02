@@ -55,7 +55,7 @@ const validate = (data) => {
     partner_bank: Joi.string().required().label("partner_bank"),
     partner_bank_number: Joi.string().required().label("partner_bank_num"),
     partner_status: Joi.string().required().label("partner_status"),
-    // partner_timestamp: Joi.date().raw().required(),
+    partner_timestamp: Joi.date().raw().default(Date.now()),
   });
   return schema.validate(data);
 };

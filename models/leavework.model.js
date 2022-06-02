@@ -34,7 +34,7 @@ const validate = (data) => {
       .label("lew_number_day"),
     lew_manager_confirm: Joi.boolean().default(false),
     lew_ceo_confirm: Joi.boolean().default(false),
-    // lew_timestamp: Joi.date().raw().required().default( Date.now()),
+    lew_timestamp: Joi.date().raw().default(Date.now()),
   });
   return schema.validate(data);
 };
